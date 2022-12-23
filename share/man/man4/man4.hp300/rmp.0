@@ -1,0 +1,132 @@
+RMP(4)           UNIX Programmer's Manual (HP300 Architecture)          RMP(4)
+
+NNAAMMEE
+     rrmmpp - HP Remote Maintenance Protocol Family
+
+SSYYNNOOPPSSIISS
+     ooppttiioonnss RRMMPP
+     ##iinncclluuddee <<ssyyss//ttyyppeess..hh>>
+     ##iinncclluuddee <<ssyyss//ssoocckkeett..hh>>
+     ##iinncclluuddee <<nneettrrmmpp//rrmmpp..hh>>
+     ##iinncclluuddee <<nneettrrmmpp//rrmmpp__vvaarr..hh>>
+
+     _i_n_t
+     ssoocckkeett(_A_F__R_M_P, _S_O_C_K__R_A_W, _p_r_o_t_o)
+
+DDEESSCCRRIIPPTTIIOONN
+     Hewlett-Packard's Remote Maintenance Protocol family is a collection of
+     protocols layered atop IEEE 802.3. The current implementation of the RMP
+     family provides protocol support only for the SOCK_RAW socket type.  As a
+     result, sendto(2) and recvfrom(2) must be used to send and receive RMP
+     packets.
+
+     The format of an RMP packet is defined in the include file
+     <_n_e_t_r_m_p/_r_m_p__v_a_r._h>. The RMP packet arrives encapsulated in an (HP extend-
+     ed) IEEE 802.2 packet.  The IEEE 802.2 packet is preceded by the kernel
+     address of an _i_f_n_e_t _s_t_r_u_c_t which is used to `route' a packet out the same
+     interface it arrived on.  Outgoing packets are encapsulated in a standard
+     IEEE 802.3 packet, while incoming packets have this information stripped
+     away.
+
+AADDDDRREESSSSIINNGG
+     RMP (IEEE 802.3) addresses are 6 octets in length (48 bytes).  Sockets in
+     the Remote Maintenance Protocol family use the following addressing
+     structure:
+
+           struct sockaddr_rmp {
+                   short           srmp_family;
+                   u_char          srmp_dhost[6];
+           };
+
+PPRROOTTOOCCOOLLSS
+     The RMP protocol family supported by the operating system is currently
+     comprised of the Boot Protocol (_p_r_o_t_o=RMPPROTO_BOOT). Unfortunately, we
+     have no documentation on the Remote Maintenance Protocol and only sketchy
+     information about the Boot Protocol.
+
+SSEEEE AALLSSOO
+     socket(2),  bind(2),  sendto(2),  recvfrom(2),  intro(4),  rbootd(8)
+
+     _A_n _A_d_v_a_n_c_e_d _4._3 _B_S_D _I_n_t_e_r_p_r_o_c_e_s_s _C_o_m_m_u_n_i_c_a_t_i_o_n _T_u_t_o_r_i_a_l.
+
+HHIISSTTOORRYY
+     The rrmmpp protocol interface currently under development.
+
+BBUUGGSS
+     oo   The HP ROM uses IEEE 802.3 (as opposed to Ethernet) packets.  While
+         the kernel heuristically recognizes these packets, a more general
+         mechanism for doing so should be provided.
+
+     oo   The HP ROM uses a multicast address when first trying to locate boot
+         servers.  While the Ethernet [sic] board is programmed to recognize
+         this particular multicast address (9:0:9:0:0:4), a more general mech-
+         anism for doing so should be provided.
+
+     oo   The kernel supports only RAW sockets for the RMP protocol.  This is
+         either a bug or a feature, since the kernel is smaller at the price
+         of greater complexity in the server.
+
+     oo   There is no support for bind'ing  an address in the RMP domain.
+         Something like an RMPADDR_ANY should be provided to prevent more than
+         one rbootd server from running at the same time.
+
+BSD Experimental                March 27, 1991                               3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

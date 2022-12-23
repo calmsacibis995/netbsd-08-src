@@ -1,0 +1,132 @@
+RBOOTD(8)                UNIX System Manager's Manual                RBOOTD(8)
+
+NNAAMMEE
+     rrbboooottdd - HP remote boot server
+
+SSYYNNOOPPSSIISS
+     rrbboooottdd [--aa] [--dd] [_C_o_n_f_i_g_F_i_l_e]
+
+DDEESSCCRRIIPPTTIIOONN
+     RRbboooottdd services boot requests from Hewlett-Packard workstations over a
+     local area network.  All boot files must reside in the boot file directo-
+     ry; further, if a client supplies path information in its boot request,
+     it will be silently stripped away before processing.  By default, rrbboooottdd
+     only responds to requests from machines listed in its configuration file.
+
+     RRbboooottdd supports the following command line options:
+
+     --aa      Respond to boot requests from any machine.  With this option, the
+             configuration file is ignored.
+
+     --dd      Run server in debug mode.  Packets sent and received are dis-
+             played to the terminal.
+
+     _C_o_n_f_i_g_F_i_l_e
+             Specify a different configuration file.
+
+     The configuration file consists of ascii text where each line describes a
+     particular machine.  A line must start with a machines' _e_t_h_e_r_n_e_t _a_d_d_r_e_s_s
+     followed by an optional list of _b_o_o_t _f_i_l_e _n_a_m_e_s. An ethernet address is
+     specified in hexadecimal with each of its six octets separated by a
+     colon.  The boot file names come from the boot file directory.  The eth-
+     ernet address and boot file(s) must be separated by white-space and/or
+     commas.  A pound sign causes the remainder of a line to be ignored.  Here
+     is a sample configuration file:
+
+     #
+     # ethernet addr   boot file(s)       comments
+     #
+     08:00:09:0:66:ad  SYSHPBSD          # snake (4.3BSD)
+     08:00:09:0:59:5b                    # vandy (anything)
+     8::9:1:C6:75      SYSHPBSD,SYSHPUX  # jaguar (either)
+
+     RRbboooottdd logs status and error messages via syslog.  A startup message is
+     always logged, and in the case of fatal errors (or deadly signals) a mes-
+     sage is logged announcing the server's termination.  In general, a non-
+     fatal error is handled by ignoring the event that caused it (e.g. an in-
+     valid Ethernet address in the config file causes that line to be invali-
+     dated).
+
+     The following signals have the specified effect when sent to the server
+     process using the kill(1) command.
+
+     SIGHUP      Drop all active connections and reconfigure.
+
+     SIGUSR1     Turn on debugging, do nothing if already on.  (SIGEMT on old-
+                 er systems without SIGUSR1)
+
+     SIGUSR2     Turn off debugging, do nothing if already off.  (SIGFPE on
+                 older systems without SIGUSR2)
+
+FFIILLEESS
+     /etc/rbootd.conf       configuration file
+     /usr/lib/rbootd        directory containing boot files
+
+
+     /etc/rbootd.pid        process id
+     /usr/tmp/rbootd.dbg    debug output
+
+SSEEEE AALLSSOO
+     kill(1),  socket(2),  signal(3),  syslog(3),  rmp(4)
+
+AAUUTTHHOORR
+     Jeff Forys, University of Utah
+
+BBUUGGSS
+     If more than one server is started, both will receive and respond to the
+     same boot packets.
+
+HHIISSTTOORRYY
+     The rrbboooottdd command is currently under development.
+
+BSD Experimental                August 5, 1991                               3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

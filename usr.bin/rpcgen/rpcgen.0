@@ -1,0 +1,132 @@
+
+
+
+RPCGEN(1)                      1988                     RPCGEN(1)
+
+
+NNAAMMEE
+       rpcgen - an RPC protocol compiler
+
+SSYYNNOOPPSSIISS
+       rrppccggeenn _i_n_f_i_l_e
+       rrppccggeenn --cc|--hh|--ll|--mm [ --oo _o_u_t_f_i_l_e ] [ _i_n_f_i_l_e ]
+       rrppccggeenn --ss _t_r_a_n_s_p_o_r_t [ --oo _o_u_t_f_i_l_e ] [ _i_n_f_i_l_e ]
+
+DDEESSCCRRIIPPTTIIOONN
+       rrppccggeenn is a tool that generates C code to implement an RPC
+       protocol.  The input to rrppccggeenn is a language similar to  C
+       known  as  RPC  Language (Remote Procedure Call Language).
+       Information about the syntax of RPC Language is  available
+       in the `_r_p_c_g_e_n' _P_r_o_g_r_a_m_m_i_n_g _G_u_i_d_e.
+
+       rrppccggeenn  is normally used as in the first synopsis where it
+       takes an input file and generates four  output  files.  If
+       the  _i_n_f_i_l_e  is named pprroottoo..xx, then rrppccggeenn will generate a
+       header file  in  pprroottoo..hh,  XDR  routines  in  pprroottoo__xxddrr..cc,
+       server-side stubs in pprroottoo__ssvvcc..cc, and client-side stubs in
+       pprroottoo__ccllnntt..cc.
+
+       The other synopses shown above are used when one does  not
+       want to generate all the output files, but only a particu-
+       lar one.  Their usage is described in  the  USAGE  section
+       below.
+
+       The  C-preprocessor,  ccpppp(1),  is  run  on all input files
+       before they are actually interpreted by rrppccggeenn, so all the
+       ccpppp directives are legal within an rrppccggeenn input file.  For
+       each type of output file, rrppccggeenn  defines  a  special  ccpppp
+       symbol for use by the rrppccggeenn programmer:
+
+       RPC_HDR     defined when compiling into header files
+       RPC_XDR     defined when compiling into XDR routines
+       RPC_SVC     defined when compiling into server-side stubs
+       RPC_CLNT    defined when compiling into client-side stubs
+
+       In  addition,  rrppccggeenn  does  a little preprocessing of its
+       own.  Any line beginning with `%%' is passed directly  into
+       the output file, uninterpreted by rrppccggeenn.
+
+       You  can  customize  some  of your XDR routines by leaving
+       those data types undefined.  For every data type  that  is
+       undefined,  rrppccggeenn will assume that there exists a routine
+       with the name xxddrr__ prepended to the name of the  undefined
+       type.
+
+OOPPTTIIOONNSS
+       --cc     Compile into XDR routines.
+
+       --hh     Compile into CC data-definitions (a header file)
+
+       --ll     Compile into client-side stubs.
+
+
+
+January                         18                              1
+
+
+
+
+
+RPCGEN(1)                      1988                     RPCGEN(1)
+
+
+       --mm     Compile into server-side stubs, but do not generate
+              a main routine.  This option is  useful  for  doing
+              callback-routines  and for people who need to write
+              their own main routine to do initialization.
+
+       --oo _o_u_t_f_i_l_e
+              Specify the name of the output file.   If  none  is
+              specified,  standard output is used (--cc, --hh, --ll and
+              --ss modes only).
+
+       --ss _t_r_a_n_s_p_o_r_t
+              Compile into server-side stubs, using the the given
+              transport.   The  supported  transports are uuddpp and
+              ttccpp.  This option may be invoked more than once  so
+              as  to compile a server that serves multiple trans-
+              ports.
+
+SSEEEE AALLSSOO
+       ccpppp(1)
+
+       `_r_p_c_g_e_n' _P_r_o_g_r_a_m_m_i_n_g _G_u_i_d_e.
+
+BBUUGGSS
+       Nesting is not supported.  As  a  work-around,  structures
+       can  be  declared at top-level, and their name used inside
+       other structures in order to achieve the same effect.
+
+       Name clashes can occur  when  using  program  definitions,
+       since  the apparent scoping does not really apply. Most of
+       these can be avoided by giving unique names for  programs,
+       versions, procedures and types.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+January                         18                              2
+
+

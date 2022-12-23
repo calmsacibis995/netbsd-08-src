@@ -1,0 +1,66 @@
+HTABLE(8)                UNIX System Manager's Manual                HTABLE(8)
+
+NNAAMMEE
+     hhttaabbllee - convert NIC standard format host tables
+
+SSYYNNOOPPSSIISS
+     hhttaabbllee [--cc _c_o_n_n_e_c_t_e_d-_n_e_t_s] [--ll _l_o_c_a_l-_n_e_t_s] _f_i_l_e
+
+DDEESSCCRRIIPPTTIIOONN
+     HHttaabbllee is used to convert host files in the format specified in Internet
+     RFC 810 to the format used by the network library routines.  Three files
+     are created as a result of running hhttaabbllee: _h_o_s_t_s, _n_e_t_w_o_r_k_s, and _g_a_t_e_w_a_y_s.
+     The hosts file may be used by the gethostbyname(3) routines in mapping
+     host names to addresses if the nameserver, named(8),  is not used.  The
+     _n_e_t_w_o_r_k_s file is used by the getnetent(3) routines in mapping network
+     names to numbers.  The _g_a_t_e_w_a_y_s file may be used by the routing daemon in
+     identifying ``passive'' Internet gateways; see routed(8) for an explana-
+     tion.
+
+     Options available for hhttaabbllee:
+
+     --cc _c_o_n_n_e_c_t_e_d-_n_e_t_s
+             If the gateways file is to be used, _c_o_n_n_e_c_t_e_d-_n_e_t_s is a list of
+             networks to which the host is directly connected.  The networks,
+             separated by commas, may be given by name or in Internet-standard
+             dot notation, for example:
+
+                   -c arpanet,128.32,local-ether-net.
+
+             HHttaabbllee only includes gateways which are directly connected to one
+             of the networks specified, or which can be reached from another
+             gateway on a connected net.
+
+     --ll _l_o_c_a_l-_n_e_t_s
+             If the --ll option is given with a list of networks (in the same
+             format as for --cc), these networks will be treated as ``local,''
+             and information about hosts on local networks is taken only from
+             the localhosts file.  Entries for local hosts from the main
+             database will be omitted.  This allows the localhosts file to
+             completely override any entries in the input file.
+
+     If any of the files _l_o_c_a_l_h_o_s_t_s, _l_o_c_a_l_n_e_t_w_o_r_k_s, or _l_o_c_a_l_g_a_t_e_w_a_y_s are pre-
+     sent in the current directory, the file's contents is prepended to the
+     output file.  Of these, only the gateways file is interpreted.  This al-
+     lows sites to maintain local aliases and entries which are not normally
+     present in the master database.  Only one gateway to each network will be
+     placed in the gateways file; a gateway listed in the localgateways file
+     will override any in the input file.
+
+     HHttaabbllee is best used in conjunction with the gettable(8) program which re-
+     trieves the NIC database from a host.
+
+SSEEEE AALLSSOO
+     netintro(4),  gettable(8),  named(8)
+
+BBUUGGSS
+     If the name-domain system provided network name mapping well as host name
+     mapping, hhttaabbllee would no longer be needed.
+
+HHIISSTTOORRYY
+     The hhttaabbllee command appeared in 4.2BSD.
+
+4.2 Berkeley Distribution       March 16, 1991                               2
+
+
+

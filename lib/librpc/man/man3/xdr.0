@@ -1,0 +1,528 @@
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+NNAAMMEE
+       xdr - library routines for external data representation
+
+SSYYNNOOPPSSIISS AANNDD DDEESSCCRRIIPPTTIIOONN
+       These  routines  allow C programmers to describe arbitrary
+       data structures in a  machine-independent  fashion.   Data
+       for  remote  procedure  calls  are transmitted using these
+       routines.
+
+       xxddrr__aarrrraayy((xxddrrss,, aarrrrpp,, ssiizzeepp,, mmaaxxssiizzee,, eellssiizzee,, eellpprroocc))
+       XXDDRR **xxddrrss;;
+       cchhaarr ****aarrrrpp;;
+       uu__iinntt **ssiizzeepp,, mmaaxxssiizzee,, eellssiizzee;;
+       xxddrrpprroocc__tt eellpprroocc;;
+
+              A filter primitive that  translates  between  vari-
+              able-length arrays and their corresponding external
+              representations. The parameter _a_r_r_p is the  address
+              of  the  pointer  to  the array, while _s_i_z_e_p is the
+              address of the element count  of  the  array;  this
+              element count cannot exceed _m_a_x_s_i_z_e.  The parameter
+              _e_l_s_i_z_e is the _s_i_z_e_o_f each of the array's  elements,
+              and _e_l_p_r_o_c is an XDR filter that translates between
+              the array elements' C form, and their external rep-
+              resentation.   This  routine returns one if it suc-
+              ceeds, zero otherwise.
+
+       xxddrr__bbooooll((xxddrrss,, bbpp))
+       XXDDRR **xxddrrss;;
+       bbooooll__tt **bbpp;;
+
+              A filter primitive that translates between booleans
+              (C  integers)  and  their external representations.
+              When encoding data, this filter produces values  of
+              either one or zero.  This routine returns one if it
+              succeeds, zero otherwise.
+
+       xxddrr__bbyytteess((xxddrrss,, sspp,, ssiizzeepp,, mmaaxxssiizzee))
+       XXDDRR **xxddrrss;;
+       cchhaarr ****sspp;;
+       uu__iinntt **ssiizzeepp,, mmaaxxssiizzee;;
+
+              A filter primitive that translates between  counted
+              byte  strings  and  their external representations.
+              The parameter _s_p  is  the  address  of  the  string
+              pointer.  The  length  of  the string is located at
+              address _s_i_z_e_p; strings cannot be longer  than  _m_a_x-
+              _s_i_z_e.   This  routine  returns  one if it succeeds,
+              zero otherwise.
+
+       xxddrr__cchhaarr((xxddrrss,, ccpp))
+       XXDDRR **xxddrrss;;
+       cchhaarr **ccpp;;
+
+
+
+
+February                        16                              1
+
+
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+              A filter primitive that translates between C  char-
+              acters  and  their  external representations.  This
+              routine returns one if it succeeds, zero otherwise.
+              Note: encoded characters are not packed, and occupy
+              4 bytes each.  For  arrays  of  characters,  it  is
+              worthwhile to consider xxddrr__bbyytteess(()), xxddrr__ooppaaqquuee(()) or
+              xxddrr__ssttrriinngg(()).
+
+       vvooiidd
+       xxddrr__ddeessttrrooyy((xxddrrss))
+       XXDDRR **xxddrrss;;
+
+              A macro that invokes the destroy routine associated
+              with  the  XDR  stream,  _x_d_r_s.  Destruction usually
+              involves freeing private data structures associated
+              with   the   stream.   Using  _x_d_r_s  after  invoking
+              xxddrr__ddeessttrrooyy(()) is undefined.
+
+       xxddrr__ddoouubbllee((xxddrrss,, ddpp))
+       XXDDRR **xxddrrss;;
+       ddoouubbllee **ddpp;;
+
+              A filter primitive that translates between C ddoouubbllee
+              precision  numbers  and  their external representa-
+              tions.  This routine returns one  if  it  succeeds,
+              zero otherwise.
+
+       xxddrr__eennuumm((xxddrrss,, eepp))
+       XXDDRR **xxddrrss;;
+       eennuumm__tt **eepp;;
+
+              A  filter primitive that translates between C eennuumms
+              (actually integers) and their external  representa-
+              tions.   This  routine  returns one if it succeeds,
+              zero otherwise.
+
+       xxddrr__ffllooaatt((xxddrrss,, ffpp))
+       XXDDRR **xxddrrss;;
+       ffllooaatt **ffpp;;
+
+              A filter primitive that translates between C ffllooaatts
+              and  their  external representations.  This routine
+              returns one if it succeeds, zero otherwise.
+
+       vvooiidd
+       xxddrr__ffrreeee((pprroocc,, oobbjjpp))
+       xxddrrpprroocc__tt pprroocc;;
+       cchhaarr **oobbjjpp;;
+
+              Generic freeing routine. The first argument is  the
+              XDR  routine for the object being freed. The second
+              argument is a pointer to the object  itself.  Note:
+              the  pointer  passed  to this routine is _n_o_t freed,
+              but what it points to _i_s freed (recursively).
+
+
+
+February                        16                              2
+
+
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+       uu__iinntt
+       xxddrr__ggeettppooss((xxddrrss))
+       XXDDRR **xxddrrss;;
+
+              A macro that invokes the get-position routine asso-
+              ciated  with  the  XDR  stream,  _x_d_r_s.  The routine
+              returns an unsigned integer,  which  indicates  the
+              position  of the XDR byte stream.  A desirable fea-
+              ture of XDR streams is that simple arithmetic works
+              with this number, although the XDR stream instances
+              need not guarantee this.
+
+       lloonngg **
+       xxddrr__iinnlliinnee((xxddrrss,, lleenn))
+       XXDDRR **xxddrrss;;
+       iinntt lleenn;;
+
+              A macro that invokes the in-line routine associated
+              with  the  XDR stream, _x_d_r_s.  The routine returns a
+              pointer to  a  contiguous  piece  of  the  stream's
+              buffer;  _l_e_n  is  the  byte  length  of the desired
+              buffer.  Note: pointer is cast to lloonngg **.
+
+              Warning: xxddrr__iinnlliinnee(()) may return  NULL  (0)  if  it
+              cannot  allocate  a  contiguous  piece of a buffer.
+              Therefore  the  behavior  may  vary  among   stream
+              instances; it exists for the sake of efficiency.
+
+       xxddrr__iinntt((xxddrrss,, iipp))
+       XXDDRR **xxddrrss;;
+       iinntt **iipp;;
+
+              A  filter primitive that translates between C inte-
+              gers and their external representations.  This rou-
+              tine returns one if it succeeds, zero otherwise.
+
+       xxddrr__lloonngg((xxddrrss,, llpp))
+       XXDDRR **xxddrrss;;
+       lloonngg **llpp;;
+
+              A  filter  primitive that translates between C lloonngg
+              integers and their external representations.   This
+              routine returns one if it succeeds, zero otherwise.
+
+       vvooiidd
+       xxddrrmmeemm__ccrreeaattee((xxddrrss,, aaddddrr,, ssiizzee,, oopp))
+       XXDDRR **xxddrrss;;
+       cchhaarr **aaddddrr;;
+       uu__iinntt ssiizzee;;
+       eennuumm xxddrr__oopp oopp;;
+
+              This routine  initializes  the  XDR  stream  object
+              pointed  to  by _x_d_r_s.  The stream's data is written
+              to, or read from, a chunk  of  memory  at  location
+
+
+
+February                        16                              3
+
+
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+              _a_d_d_r  whose length is no more than _s_i_z_e bytes long.
+              The _o_p determines the direction of the  XDR  stream
+              (either XXDDRR__EENNCCOODDEE, XXDDRR__DDEECCOODDEE, or XXDDRR__FFRREEEE).
+
+       xxddrr__ooppaaqquuee((xxddrrss,, ccpp,, ccnntt))
+       XXDDRR **xxddrrss;;
+       cchhaarr **ccpp;;
+       uu__iinntt ccnntt;;
+
+              A  filter  primitive  that translates between fixed
+              size opaque data and its  external  representation.
+              The  parameter  _c_p  is  the  address  of the opaque
+              object, and _c_n_t is its size in bytes.  This routine
+              returns one if it succeeds, zero otherwise.
+
+       xxddrr__ppooiinntteerr((xxddrrss,, oobbjjpppp,, oobbjjssiizzee,, xxddrroobbjj))
+       XXDDRR **xxddrrss;;
+       cchhaarr ****oobbjjpppp;;
+       uu__iinntt oobbjjssiizzee;;
+       xxddrrpprroocc__tt xxddrroobbjj;;
+
+              Like xxddrr__rreeffeerreennccee(()) execpt that it serializes NULL
+              pointers, whereas xxddrr__rreeffeerreennccee(()) does not.   Thus,
+              xxddrr__ppooiinntteerr(())  can  represent recursive data struc-
+              tures, such as binary trees or linked lists.
+
+       vvooiidd
+       xxddrrrreecc__ccrreeaattee((xxddrrss,, sseennddssiizzee,, rreeccvvssiizzee,, hhaannddllee,, rreeaaddiitt,, wwrriitteeiitt))
+       XXDDRR **xxddrrss;;
+       uu__iinntt sseennddssiizzee,, rreeccvvssiizzee;;
+       cchhaarr **hhaannddllee;;
+       iinntt ((**rreeaaddiitt)) (()),, ((**wwrriitteeiitt)) (());;
+
+              This routine  initializes  the  XDR  stream  object
+              pointed  to  by _x_d_r_s.  The stream's data is written
+              to a buffer of size _s_e_n_d_s_i_z_e; a value of zero indi-
+              cates the system should use a suitable default. The
+              stream's data is read from a buffer of  size  _r_e_c_v-
+              _s_i_z_e;  it  too  can be set to a suitable default by
+              passing a  zero  value.   When  a  stream's  output
+              buffer is full, _w_r_i_t_e_i_t is called.  Similarly, when
+              a stream's input buffer is empty, _r_e_a_d_i_t is called.
+              The  behavior  of  these two routines is similar to
+              the system calls rreeaadd and wwrriittee, except that _h_a_n_d_l_e
+              is  passed  to  the  former  routines  as the first
+              parameter.  Note: the XDR stream's _o_p field must be
+              set by the caller.
+
+              Warning: this XDR stream implements an intermediate
+              record  stream.   Therefore  there  are  additional
+              bytes  in  the  stream  to  provide record boundary
+              information.
+
+       xxddrrrreecc__eennddooffrreeccoorrdd((xxddrrss,, sseennddnnooww))
+
+
+
+February                        16                              4
+
+
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+       XXDDRR **xxddrrss;;
+       iinntt sseennddnnooww;;
+
+              This routine can be invoked only on streams created
+              by  xxddrrrreecc__ccrreeaattee(()).  The data in the output buffer
+              is marked as a completed  record,  and  the  output
+              buffer is optionally written out if _s_e_n_d_n_o_w is non-
+              zero. This routine returns one if it succeeds, zero
+              otherwise.
+
+       xxddrrrreecc__eeooff((xxddrrss))
+       XXDDRR **xxddrrss;;
+       iinntt eemmppttyy;;
+
+              This routine can be invoked only on streams created
+              by xxddrrrreecc__ccrreeaattee(()).  After consuming  the  rest  of
+              the  current  record  in  the  stream, this routine
+              returns one if the stream has no more  input,  zero
+              otherwise.
+
+       xxddrrrreecc__sskkiipprreeccoorrdd((xxddrrss))
+       XXDDRR **xxddrrss;;
+
+              This routine can be invoked only on streams created
+              by xxddrrrreecc__ccrreeaattee(()).  It tells the  XDR  implementa-
+              tion  that  the  rest  of the current record in the
+              stream's input buffer should  be  discarded.   This
+              routine returns one if it succeeds, zero otherwise.
+
+       xxddrr__rreeffeerreennccee((xxddrrss,, pppp,, ssiizzee,, pprroocc))
+       XXDDRR **xxddrrss;;
+       cchhaarr ****pppp;;
+       uu__iinntt ssiizzee;;
+       xxddrrpprroocc__tt pprroocc;;
+
+              A primitive that provides  pointer  chasing  within
+              structures.  The parameter _p_p is the address of the
+              pointer; _s_i_z_e is the _s_i_z_e_o_f the structure that  *_p_p
+              points  to;  and _p_r_o_c is an XDR procedure that fil-
+              ters the structure  between  its  C  form  and  its
+              external  representation.  This routine returns one
+              if it succeeds, zero otherwise.
+
+              Warning: this  routine  does  not  understand  NULL
+              pointers. Use xxddrr__ppooiinntteerr(()) instead.
+
+       xxddrr__sseettppooss((xxddrrss,, ppooss))
+       XXDDRR **xxddrrss;;
+       uu__iinntt ppooss;;
+
+              A macro that invokes the set position routine asso-
+              ciated with the XDR stream _x_d_r_s.  The parameter _p_o_s
+              is  a  position  value  obtained from xxddrr__ggeettppooss(()).
+              This routine returns one if the XDR stream could be
+
+
+
+February                        16                              5
+
+
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+              repositioned, and zero otherwise.
+
+              Warning:  it  is difficult to reposition some types
+              of XDR streams, so this routine may fail  with  one
+              type of stream and succeed with another.
+
+       xxddrr__sshhoorrtt((xxddrrss,, sspp))
+       XXDDRR **xxddrrss;;
+       sshhoorrtt **sspp;;
+
+              A  filter primitive that translates between C sshhoorrtt
+              integers and their external representations.   This
+              routine returns one if it succeeds, zero otherwise.
+
+       vvooiidd
+       xxddrrssttddiioo__ccrreeaattee((xxddrrss,, ffiillee,, oopp))
+       XXDDRR **xxddrrss;;
+       FFIILLEE **ffiillee;;
+       eennuumm xxddrr__oopp oopp;;
+
+              This routine  initializes  the  XDR  stream  object
+              pointed to by _x_d_r_s.  The XDR stream data is written
+              to, or read from, the  Standard  II//OO  stream  _f_i_l_e.
+              The  parameter  _o_p  determines the direction of the
+              XDR  stream  (either  XXDDRR__EENNCCOODDEE,  XXDDRR__DDEECCOODDEE,   or
+              XXDDRR__FFRREEEE).
+
+              Warning:  the  destroy routine associated with such
+              XDR streams calls fffflluusshh(()) on the _f_i_l_e stream,  but
+              never ffcclloossee(()).
+
+       xxddrr__ssttrriinngg((xxddrrss,, sspp,, mmaaxxssiizzee))
+       XXDDRR
+       **xxddrrss;;
+       cchhaarr ****sspp;;
+       uu__iinntt mmaaxxssiizzee;;
+
+              A   filter  primitive  that  translates  between  C
+              strings and their corresponding external  represen-
+              tations.   Strings  cannot  be longer than _m_a_x_s_i_z_e.
+              Note: _s_p is the address of  the  string's  pointer.
+              This  routine  returns  one  if  it  succeeds, zero
+              otherwise.
+
+       xxddrr__uu__cchhaarr((xxddrrss,, uuccpp))
+       XXDDRR **xxddrrss;;
+       uunnssiiggnneedd cchhaarr **uuccpp;;
+
+              A filter primitive that translates between uunnssiiggnneedd
+              C  characters  and  their external representations.
+              This routine  returns  one  if  it  succeeds,  zero
+              otherwise.
+
+       xxddrr__uu__iinntt((xxddrrss,, uupp))
+
+
+
+February                        16                              6
+
+
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+       XXDDRR **xxddrrss;;
+       uunnssiiggnneedd **uupp;;
+
+              A   filter  primitive  that  translates  between  C
+              uunnssiiggnneedd integers and  their  external  representa-
+              tions.   This  routine  returns one if it succeeds,
+              zero otherwise.
+
+       xxddrr__uu__lloonngg((xxddrrss,, uullpp))
+       XXDDRR **xxddrrss;;
+       uunnssiiggnneedd lloonngg **uullpp;;
+
+              A  filter  primitive  that  translates  between   C
+              uunnssiiggnneedd lloonngg integers and their external represen-
+              tations.  This routine returns one if it  succeeds,
+              zero otherwise.
+
+       xxddrr__uu__sshhoorrtt((xxddrrss,, uusspp))
+       XXDDRR **xxddrrss;;
+       uunnssiiggnneedd sshhoorrtt **uusspp;;
+
+              A   filter  primitive  that  translates  between  C
+              uunnssiiggnneedd sshhoorrtt integers and their  external  repre-
+              sentations.   This  routine  returns one if it suc-
+              ceeds, zero otherwise.
+
+       xxddrr__uunniioonn((xxddrrss,, ddssccmmpp,, uunnpp,, cchhooiicceess,, ddffaauulltt))
+       XXDDRR **xxddrrss;;
+       iinntt **ddssccmmpp;;
+       cchhaarr **uunnpp;;
+       ssttrruucctt xxddrr__ddiissccrriimm **cchhooiicceess;;
+       bbooooll__tt ((**ddeeffaauullttaarrmm)) (());;  //** mmaayy eeqquuaall NNUULLLL **//
+
+              A filter primitive that translates between  a  dis-
+              criminated  C  uunniioonn and its corresponding external
+              representation. It first translates  the  discrimi-
+              nant of the union located at _d_s_c_m_p.  This discrimi-
+              nant is always an eennuumm__tt.  Next the  union  located
+              at  _u_n_p  is translated.  The parameter _c_h_o_i_c_e_s is a
+              pointer to an array  of  xxddrr__ddiissccrriimm(())  structures.
+              Each   structure   contains   an  ordered  pair  of
+              [_v_a_l_u_e,_p_r_o_c].  If the union's discriminant is equal
+              to the associated _v_a_l_u_e, then the _p_r_o_c is called to
+              translate the union.  The end of the  xxddrr__ddiissccrriimm(())
+              structure  array  is  denoted by a routine of value
+              NULL.  If the discriminant  is  not  found  in  the
+              _c_h_o_i_c_e_s  array,  then  the  _d_e_f_a_u_l_t_a_r_m procedure is
+              called (if it is not NULL).  Returns one if it suc-
+              ceeds, zero otherwise.
+
+       xxddrr__vveeccttoorr((xxddrrss,, aarrrrpp,, ssiizzee,, eellssiizzee,, eellpprroocc))
+       XXDDRR **xxddrrss;;
+       cchhaarr **aarrrrpp;;
+       uu__iinntt ssiizzee,, eellssiizzee;;
+
+
+
+February                        16                              7
+
+
+
+
+
+XDR(3N)                        1988                       XDR(3N)
+
+
+       xxddrrpprroocc__tt eellpprroocc;;
+
+              A  filter  primitive that translates between fixed-
+              length arrays and their corresponding external rep-
+              resentations.  The parameter _a_r_r_p is the address of
+              the pointer to the array, while _s_i_z_e is is the ele-
+              ment  count  of the array.  The parameter _e_l_s_i_z_e is
+              the _s_i_z_e_o_f each of the array's elements, and _e_l_p_r_o_c
+              is  an XDR filter that translates between the array
+              elements' C form, and  their  external  representa-
+              tion.   This  routine  returns  one if it succeeds,
+              zero otherwise.
+
+       xxddrr__vvooiidd(())
+
+              This routine always returns one.  It may be  passed
+              to  RPC routines that require a function parameter,
+              where nothing is to be done.
+
+       xxddrr__wwrraappssttrriinngg((xxddrrss,, sspp))
+       XXDDRR **xxddrrss;;
+       cchhaarr ****sspp;;
+
+              A    primitive    that    calls    xxddrr__ssttrriinngg((xxddrrss,,
+              sspp,,MMAAXXUUNN..UUNNSSIIGGNNEEDD  ));;  where  MMAAXXUUNN..UUNNSSIIGGNNEEDD is the
+              maximum   value    of    an    unsigned    integer.
+              xxddrr__wwrraappssttrriinngg(())  is  handy because the RPC package
+              passes a maximum of two XDR routines as parameters,
+              and  xxddrr__ssttrriinngg(()),  one of the most frequently used
+              primitives, requires three.  Returns one if it suc-
+              ceeds, zero otherwise.
+
+SSEEEE AALLSSOO
+       rrppcc(3N)
+
+       The following manuals:
+              _e_X_t_e_r_n_a_l  _D_a_t_a  _R_e_p_r_e_s_e_n_t_a_t_i_o_n  _S_t_a_n_d_a_r_d:  _P_r_o_t_o_c_o_l
+              _S_p_e_c_i_f_i_c_a_t_i_o_n
+              _e_X_t_e_r_n_a_l _D_a_t_a _R_e_p_r_e_s_e_n_t_a_t_i_o_n: _S_u_n _T_e_c_h_n_i_c_a_l _N_o_t_e_s
+              _X_D_R:   _E_x_t_e_r_n_a_l   _D_a_t_a   _R_e_p_r_e_s_e_n_t_a_t_i_o_n   _S_t_a_n_d_a_r_d,
+              RFC1014, Sun Microsystems, Inc., USC-ISI.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+February                        16                              8
+
+

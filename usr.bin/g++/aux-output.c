@@ -1,0 +1,1 @@
+./../../gcc/cc1/config/out-i386.c

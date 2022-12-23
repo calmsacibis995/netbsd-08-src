@@ -1,0 +1,132 @@
+
+
+
+RPCINFO(8C)                    1987                   RPCINFO(8C)
+
+
+NNAAMMEE
+       rpcinfo - report RPC information
+
+SSYYNNOOPPSSIISS
+       rrppcciinnffoo --pp [ _h_o_s_t ]
+
+       rrppcciinnffoo [ --nn _p_o_r_t_n_u_m ] --uu _h_o_s_t _p_r_o_g_r_a_m [ _v_e_r_s_i_o_n ]
+
+       rrppcciinnffoo [ --nn _p_o_r_t_n_u_m ] --tt _h_o_s_t _p_r_o_g_r_a_m [ _v_e_r_s_i_o_n ]
+
+       rrppcciinnffoo --bb _p_r_o_g_r_a_m _v_e_r_s_i_o_n
+
+       rrppcciinnffoo --dd _p_r_o_g_r_a_m _v_e_r_s_i_o_n
+
+DDEESSCCRRIIPPTTIIOONN
+       rrppcciinnffoo  makes  an  RPC  call to an RPC server and reports
+       what it finds.
+
+OOPPTTIIOONNSS
+       --pp     Probe the portmapper on _h_o_s_t, and print a  list  of
+              all registered RPC programs.  If _h_o_s_t is not speci-
+              fied, it defaults to the value  returned  by  hhoosstt--
+              nnaammee(1).
+
+       --uu     Make  an  RPC call to procedure 0 of _p_r_o_g_r_a_m on the
+              specified _h_o_s_t using  UDP,  and  report  whether  a
+              response was received.
+
+       --tt     Make  an  RPC call to procedure 0 of _p_r_o_g_r_a_m on the
+              specified _h_o_s_t using  TCP,  and  report  whether  a
+              response was received.
+
+       --nn     Use  _p_o_r_t_n_u_m  as  the port number for the -_t and -_u
+              options instead of the port  number  given  by  the
+              portmapper.
+
+       --bb     Make  an RPC broadcast to procedure 0 of the speci-
+              fied _p_r_o_g_r_a_m and _v_e_r_s_i_o_n using UDP and  report  all
+              hosts that respond.
+
+       --dd     Delete  registration  for  the  RPC  service of the
+              specified _p_r_o_g_r_a_m and _v_e_r_s_i_o_n.  This option can  be
+              exercised only by the super-user.
+
+       The _p_r_o_g_r_a_m argument can be either a name or a number.
+
+       If  a  _v_e_r_s_i_o_n is specified, rrppcciinnffoo attempts to call that
+       version of  the  specified  _p_r_o_g_r_a_m.   Otherwise,  rrppcciinnffoo
+       attempts  to  find  all the registered version numbers for
+       the specified _p_r_o_g_r_a_m by calling version 0 (which is  pre-
+       sumed  not to exist; if it does exist, rrppcciinnffoo attempts to
+       obtain this information by calling an extremely high  ver-
+       sion  number instead) and attempts to call each registered
+       version.  Note: the version number is required for --bb  and
+
+
+
+December                        17                              1
+
+
+
+
+
+RPCINFO(8C)                    1987                   RPCINFO(8C)
+
+
+       --dd options.
+
+EEXXAAMMPPLLEESS
+       To  show  all  of the RPC services registered on the local
+       machine use:
+
+              eexxaammppllee%% rrppcciinnffoo --pp
+
+       To show all of the RPC services registered on the  machine
+       named kkllaaxxoonn use:
+
+              eexxaammppllee%% rrppcciinnffoo --pp kkllaaxxoonn
+
+       To show all machines on the local net that are running the
+       Yellow Pages service use:
+
+              eexxaammppllee%% rrppcciinnffoo --bb yyppsseerrvv ''vveerrssiioonn'' || uunniiqq
+
+       where  'version'  is  the  current  Yellow  Pages  version
+       obtained from the results of the --pp switch above.
+
+       To delete the registration for version 1 of the wwaalllldd ser-
+       vice use:
+
+              eexxaammppllee%% rrppcciinnffoo --dd wwaalllldd 11
+
+SSEEEE AALLSSOO
+       rrppcc(5), ppoorrttmmaapp(8C)
+
+       _R_P_C _P_r_o_g_r_a_m_m_i_n_g _G_u_i_d_e
+
+BBUUGGSS
+       In releases prior to SunOS 3.0, the  Network  File  System
+       (NFS) did not register itself with the portmapper; rrppcciinnffoo
+       cannot be used to make RPC calls  to  the  NFS  server  on
+       hosts running such releases.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+December                        17                              2
+
+

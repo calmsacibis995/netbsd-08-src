@@ -1,0 +1,66 @@
+SWAPINFO(1)                  UNIX Reference Manual                 SWAPINFO(1)
+
+NNAAMMEE
+     sswwaappiinnffoo - display free swap space
+
+SSYYNNOOPPSSIISS
+     sswwaappiinnffoo [--kk]
+
+DDEESSCCRRIIPPTTIIOONN
+     SSwwaappiinnffoo displays statistics about the amount of free swap space on all
+     of the swap areas compiled into the kernel.
+
+     The following options are available:
+
+     --kk      By default, all sizes are reported in 512-byte block counts.  The
+             --kk option causes the numbers to be reported in kilobyte counts.
+
+SSTTAATTIISSTTIICCSS
+     Statistics are reported for all swap partitions configured into the ker-
+     nel.  The first column is the device name of the partition.  The next
+     column is the total space available in the partition.  The _U_s_e_d column
+     indicates the total blocks used so far;  the _A_v_a_i_l_a_b_l_e column indicates
+     how much space is remaining on each partition.  The _C_a_p_a_c_i_t_y reports the
+     percentage of space used.
+
+     If more than one partition is configured into the system, totals for all
+     of the statistics will be reported in the final line of the report.
+
+BBUUGGSS AANNDD CCAAVVEEAATTSS
+     The information reported by sswwaappiinnffoo is stored in the kernel in a linked
+     list.  Since we are merely reading this list out of kernel memory, it is
+     entirely possible that the list could change as we try to read it.  Sus-
+     picious and unrepeatable values are probably incorrect.
+
+     Statistics are reported for all swap partitions compiled into the kernel,
+     regardless of whether those partitions are being used.
+
+AAUUTTHHOORR
+     Kevin Lahey
+     kml@rokkaku.atl.ga.us
+
+                               February 23, 1993                             2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,132 @@
+
+
+
+IOSTAT(8)                      1991                     IOSTAT(8)
+
+
+NNAAMMEE
+       iostat - report I/O statistics
+
+SSYYNNOOPPSSIISS
+       iioossttaatt [[ --cc ccoouunntt ]] [[ --MM ccoorree ]] [[ --NN ssyysstteemm ]]
+            [[ --ww wwaaiitt ]] [[ ddrriivveess ]]
+
+DDEESSCCRRIIPPTTIIOONN
+       _I_o_s_t_a_t reports certain kernel statistics kept about termi-
+       nal, disk and cpu activity.
+
+       The options are as follows:
+
+       -c     Repeat the display _c_o_u_n_t times.  The first  display
+              is  for the time since a reboot and each subsequent
+              report is for the time period since the  last  dis-
+              play.   If  no  _w_a_i_t  interval  is  specified,  the
+              default is 1 second.
+
+       -M     Extract values associated with the name  list  from
+              the   specified   core   instead   of  the  default
+              ``/dev/kmem''.
+
+       -N     Extract the name list  from  the  specified  system
+              instead of the default ``/vmunix''.
+
+       -w     Pause  _w_a_i_t  seconds  between  each display.  If no
+              repeat _c_o_u_n_t is specified, the default is infinity.
+
+       _I_o_s_t_a_t displays its information in the following format:
+
+       tty
+              tin  characters read from terminals
+              tout characters written to terminals
+
+       disks  Disk  operations  (this field is system dependent).
+              The header of the field is the disk name  and  unit
+              number.   If more than four disk drives are config-
+              ured in the system, _i_o_s_t_a_t displays only the  first
+              four  drives.   To force _i_o_s_t_a_t to display specific
+              drives, their names may be supplied on the  command
+              line.
+
+              sps  sectors transferred per second
+              tps  transfers per second
+              msps milliseconds per average seek (including implied
+                   seeks and rotational latency)
+
+       cpu
+              us   % of cpu time in user mode
+              ni   % of cpu time in user mode running niced processes
+              sy   % of cpu time in system mode
+              id   % of cpu time in idle mode
+
+
+
+
+24,                           April                             1
+
+
+
+
+
+IOSTAT(8)                      1991                     IOSTAT(8)
+
+
+FFIILLEESS
+       /vmunix    default kernel namelist
+       /dev/kmem  default memory file
+
+SSEEEE AALLSSOO
+       _f_s_t_a_t(1),   _n_e_t_s_t_a_t(1),   _n_f_s_s_t_a_t(1),   _p_s(1),  _s_y_s_t_a_t(1),
+       _v_m_s_t_a_t(1), _p_s_t_a_t(8)
+
+       The sections starting with  ``Interpreting  system  activ-
+       ity'' in _I_n_s_t_a_l_l_i_n_g _a_n_d _O_p_e_r_a_t_i_n_g _4._3_B_S_D.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+24,                           April                             2
+
+

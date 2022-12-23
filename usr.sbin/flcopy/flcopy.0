@@ -1,0 +1,66 @@
+
+
+
+FLCOPY(8)                      1991                     FLCOPY(8)
+
+
+NNAAMMEE
+       flcopy - floppy copy
+
+SSYYNNOOPPSSIISS
+       ffllccooppyy [[ --hhrr ]] [[ --ff ffiillee ]] [[ --tt nnttrraacckkss ]]
+
+DDEESSCCRRIIPPTTIIOONN
+       _F_l_c_o_p_y copies the console floppy disk (``/dev/floppy'') to
+       a file in the current directory,  named  ``floppy''.   The
+       user  is  then  prompted to change the floppy, and enter a
+       carriage return when done.   When  a  carriage  return  is
+       entered, _f_l_c_o_p_y copies the file out to the floppy disk.
+
+       The options are as follows:
+
+       -f     Use _f_i_l_e instead of ``/dev/floppy''.
+
+       -h     Cause _f_l_c_o_p_y to copy a file named ``floppy'' in the
+              current directory to the console floppy disk.
+
+       -r     Cause _f_l_c_o_p_y to copy  the  floppy  to  the  current
+              directory and then quit.
+
+       -t     Copy only the first _n_t_r_a_c_k_s tracks.
+
+FFIILLEESS
+       floppy              temporary file name
+       /dev/floppy         default floppy device
+
+SSEEEE AALLSSOO
+       crl(4), fl(4), rx(4), tu(4), arff(8), rxformat(8)
+
+BBUUGGSS
+       Device errors are handled ungracefully.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+20,                           April                             1
+
+
